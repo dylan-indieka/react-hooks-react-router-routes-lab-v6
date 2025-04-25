@@ -1,9 +1,13 @@
-import { afterEach } from 'vitest'
-import { cleanup } from '@testing-library/react'
-import '@testing-library/jest-dom/vitest'
-import 'whatwg-fetch';
-import {Blob} from 'node:buffer';
+import Home from '../pages/Home';
+import Actors from '../pages/Actors';
+import Directors from '../pages/Directors';
+import Movie from '../pages/Movie';
 
-afterEach(() => {
-    cleanup();
-})
+const routes = [
+    { path: "/", element: <Home /> },
+    { path: "/actors", element: <Actors /> },
+    { path: "/directors", element: <Directors /> },
+    { path: "/movie/:id", element: <Movie /> },
+];
+
+export default routes;

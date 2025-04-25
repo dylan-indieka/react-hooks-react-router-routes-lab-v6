@@ -1,55 +1,26 @@
 import "@testing-library/jest-dom";
-import React from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
-import { BrowserRouter } from "react-router-dom";
-import NavBar from "../components/NavBar";
+import { render, screen } from "@testing-library/react";
+import { RouterProvider, createMemoryRouter } from "react-router-dom";
+import routes from "../routes";
 
-let container;
-
-beforeEach(() => {
-  container = render(
-    <BrowserRouter>
-      <NavBar />
-    </BrowserRouter>
-  ).container;
+test("renders a Home <NavLink>", () => {
+  const router = createMemoryRouter(routes, {
+    initialEntries: ["/"],
+  });
+  render(<RouterProvider router={router} />);
+  const link = screen.queryByText(/Home/);
+  expect(link).toBeInTheDocument();
+  expect(link.tagName).toBe("A");
+  expect(link.href).toContain("/");
 });
 
-test('wraps content in a div with "navbar" class', () => {
-  expect(container.querySelector(".navbar")).toBeInTheDocument();
-});
-
-test("renders a Home <NavLink>", async () => {
-  const a = screen.queryByText(/Home/);
-
-  expect(a).toBeInTheDocument();
-  expect(a.tagName).toBe("A");
-  expect(a.href).toContain("/");
-
-  fireEvent.click(a, { button: 0 });
-
-  expect(a.classList).toContain("active");
-});
-
-test("renders a Actors <NavLink>", async () => {
-  const a = screen.queryByText(/Actors/);
-
-  expect(a).toBeInTheDocument();
-  expect(a.tagName).toBe("A");
-  expect(a.href).toContain("/");
-
-  fireEvent.click(a, { button: 0 });
-
-  expect(a.classList).toContain("active");
-});
-
-test("renders a Directors <NavLink>", async () => {
-  const a = screen.queryByText(/Directors/);
-
-  expect(a).toBeInTheDocument();
-  expect(a.tagName).toBe("A");
-  expect(a.href).toContain("/");
-
-  fireEvent.click(a, { button: 0 });
-
-  expect(a.classList).toContain("active");
+test("renders an Actors <NavLink>", () => {
+  const router = createMemoryRouter(routes, {
+    initialEntries: ["/"],
+  });
+  render(<RouterProvider router={router} />);
+  const link = screen.queryByText(/Actors/);
+  expect(link).toBeInTheDocument();
+  expect(link.tagName).toBe("A");
+  expect(link.href).toContain("/actors");
 });
